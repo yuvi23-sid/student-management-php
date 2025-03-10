@@ -1,9 +1,4 @@
-<?php
-require 'app/controllers/Controller.php';
-require 'app/models/UserModel.php';
-require 'app/models/StudentModel.php';
-
-$url = $_GET['url'] ?? 'home';
+$url = $_GET['url'] ?? 'login'; // Default to 'login' instead of 'home'
 $controller = new Controller();
 
 switch ($url) {
@@ -23,6 +18,7 @@ switch ($url) {
         $controller->deleteStudent();
         break;
     default:
-        $controller->home();
-        break;
+        // Redirect to the login page by default
+        header('Location: /student_management/login');
+        exit();
 }
