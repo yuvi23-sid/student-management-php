@@ -67,6 +67,9 @@
 <body>
     <div class="container">
         <h1>Register</h1>
+        <?php if (!empty($error)): ?>
+            <div class="error"><?= $error ?></div>
+        <?php endif; ?>
         <form action="/student_management/register" method="POST">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
