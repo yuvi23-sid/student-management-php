@@ -15,10 +15,10 @@ class Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $email = $_POST['email'];
-            $hashedpassword = $_POST['password'];
+            $password = $_POST['password'];
     
             // Call the UserModel to register the user
-            $success = $this->userModel->register($username, $email, $hashedpassword);
+            $success = $this->userModel->register($username, $email, $password);
     
             if ($success) {
                 // Redirect to login page after successful registration
