@@ -60,32 +60,56 @@ public function login() {
     }
 }
 
-    public function students() {
-        session_start();
-        if (!isset($_SESSION['user'])) {
-            header('Location: /login');
-        }
-        $students = $this->studentModel->getAllStudents();
-        require 'app/views/students.php';
+public function students() {
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: /student_management/login');
+        exit();
     }
 
-    public function addStudent() {
-        session_start();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = $_POST['name'];
-            $studentId = $_POST['student_id'];
-            $email = $_POST['email'];
-            $this->studentModel->addStudent($name, $studentId, $email);
-            header('Location: /students');
-        }
+    // Fetch all students from the database
+    $students = $this->studentModel->getAllStudents();
+    require 'app/views/students.php';
+}
+
+public function addStudent() {
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: /student_management/login');
+        exit();
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $name = $_POST['name'];
+        $studentId = $_POST['student_id'];
+        $email = $_POST['email'];
+
+        // Add the student to the database
+        $this->studentModel->addStudent($name, $studentId, $email);
+
+        // Redirect to the students page
+        header('Location: /student_management/students');
+        exit();
+    } else {
+        // Load the add student form
+        require 'app/views/add-student.php';
+    }
+}
 
     public function deleteStudent() {
         session_start();
+        if (!isset($_SESSION['user'])) {
+            header('Location: /student_management/login');
+            exit();
+        }
+
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $this->studentModel->deleteStudent($id);
-            header('Location: /students');
         }
+
+        // Redirect to the students page
+        header('Location: /student_management/students');
+        exit();
     }
 }
