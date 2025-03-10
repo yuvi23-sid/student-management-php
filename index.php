@@ -1,6 +1,14 @@
-$url = $_GET['url'] ?? 'login'; // Default to 'login' instead of 'home'
+<?php
+// Include necessary files
+require 'app/controllers/Controller.php';
+
+// Get the URL parameter or default to 'login'
+$url = $_GET['url'] ?? 'login';
+
+// Create an instance of the Controller
 $controller = new Controller();
 
+// Route the request based on the URL
 switch ($url) {
     case 'register':
         $controller->register();
