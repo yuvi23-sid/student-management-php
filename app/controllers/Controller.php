@@ -1,4 +1,6 @@
 <?php
+
+require_once __DIR__ . '/../models/UserModel.php';
 class Controller {
     private $userModel;
     private $studentModel;
