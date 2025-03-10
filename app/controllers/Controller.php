@@ -16,10 +16,22 @@ class Controller {
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
-            $this->userModel->register($username, $email, $password);
-            header('Location: /login');
+    
+            // Call the UserModel to register the user
+            $success = $this->userModel->register($username, $email, $password);
+    
+            if ($success) {
+                // Redirect to login page after successful registration
+                header('Location: /student_management/login');
+                exit();
+            } else {
+                // Handle registration failure (e.g., show an error message)
+                echo "Registration failed. Please try again.";
+            }
+        } else {
+            // Load the registration form
+            require 'app/views/register.php';
         }
-        require 'app/views/register.php';
     }
 
     public function login() {
