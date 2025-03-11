@@ -20,13 +20,14 @@ class Controller {
         // Call the UserModel to register the user
          $success = $this->userModel->register($username, $email, $password);
 
-        if ($success) {
+        if ($success === true) {
             // Redirect to login page after successful registration
             header('Location: /student_management/login');
             exit();
         } else {
             // Handle registration failure (e.g., show an error message)
-            echo "Registration failed. Please try again.";
+            $error = $success;
+            require 'app/views/register.php';
         }
     } else {
         // Load the registration form
