@@ -14,13 +14,16 @@ class UserModel {
     
         if ($user) {
             // Email already exists
-            return false;
+            return "Account already exists.";
         }
     
-        // Insert the new user
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->db->prepare("INSERT INTO user (username, email, password) VALUES (?, ?, ?)");
-        return $stmt->execute([$username, $email, $hashedPassword]);
+        if ($stmt->execute([$username, $email, $hashedPassword])) {
+            return true; // Registration successful
+        } else {
+            return "Registration failed. Please try again.";
+        }
     }
 
     public function login($email, $password) {
